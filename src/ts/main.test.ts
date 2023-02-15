@@ -1,9 +1,23 @@
+// const localStorageMock = {
+//   getItem: jest.fn(),
+//   setItem: jest.fn(),
+//   clear: jest.fn(),
+// };
+// global.localStorage = localStorageMock;
+
+beforeAll(() => {
+  (global as any).localStorage = {
+    getItem: jest.fn().mockReturnValue("[]"),
+    setItem: jest.fn(),
+    clear: jest.fn()
+  };
+});
+
+
 import { addTodo, changeTodo, removeAllTodos } from "./functions";
 import { IAddResponse } from "./models/IAddResult";
 import { Todo } from "./models/Todo";
 import { displayError, createHtml, clearTodos, toggleTodo, createNewTodo } from "./main";
-// import "./main";
-
 
 describe('addTodo', () => {
   let todos: Todo[];
@@ -60,6 +74,20 @@ test('should remove all todos from the array', () => {
   expect(Todos.length).toBe(0);
 })
 
+describe('createNewTodo', () => {
+  test('should add a new todo when given valid input', () => {
+    const todoText = 'Buy milk';
+    const initialTodos: Todo[] = [];
+    const expectedTodos: Todo[] = [new Todo(todoText, false)];
+
+    createNewTodo(todoText, initialTodos);
+
+    expect(initialTodos.length).toBe(1);
+    expect(initialTodos[0].text).toBe(todoText);
+  });
+});
+
+
 // describe('createNewTodo', () => {
 //   test("should create a new todo", () => {
 //     const todos: Todo[] = [];
@@ -102,25 +130,6 @@ test('should remove all todos from the array', () => {
 //     expect(result).toEqual(expectedTodos);
 //   });
 // });
-
-
-// describe('toggleTodo', () => {
-//   let todo: Todo;
-//   let changeTodoSpy: jest.SpyInstance;
-//   let createHtmlSpy: jest.SpyInstance;
-
-//   beforeEach(() => {
-//     todo = new Todo('Buy milk', true);
-//     changeTodoSpy = jest.spyOn(changeTodo);
-//     createHtmlSpy = jest.spyOn(createHtml);
-//   });
-
-//   test('should toggle the todo and update the HTML', () => {
-//     toggleTodo(todo);
-
-//     expect(changeTodoSpy).toHaveBeenCalledWith(todo);
-//     expect(createHtmlSpy).toHaveBeenCalled();
-//   });
 // });
 
 
@@ -188,24 +197,41 @@ test('should remove all todos from the array', () => {
               //   });
               // });
 
+// test('should remove all todos and update the HTML', () => {
+//   // Initialize the todos array with some data
+//   const todos: Todo[] = [
+//     new Todo('Buy milk', true),
+//     new Todo('Walk the dog', false),
+//   ];
 
-// describe('clearTodos', () => {
-//   let todos: Todo[];
+//   // Spy on the removeAllTodos and createHtml functions
+//   const removeAllTodosSpy = jest.spyOn(functions, 'removeAllTodos');
+//   const createHtmlSpy = jest.spyOn(main, 'createHtml');
 
-//   beforeEach(() => {
-//     todos = [
-//       new Todo('Buy milk', true),
-//       new Todo('Walk the dog', false),
-//     ];
-//   });
+//   // Call the clearTodos function with the todos array
+//   clearTodos(todos);
 
-//   test('should remove all todos and update the HTML', () => {
-//     const removeAllTodosSpy = jest.spyOn(todos, 'removeAllTodos');
-//     const createHtmlSpy = jest.spyOn(todos, 'createHtml');
+//   // Expect the removeAllTodos and createHtml functions to be called with the todos array
+//   expect(removeAllTodosSpy).toHaveBeenCalledWith(todos);
+//   expect(createHtmlSpy).toHaveBeenCalledWith(todos);
+// });
 
-//     clearTodos(todos);
-
-//     expect(removeAllTodosSpy).toHaveBeenCalledWith(todos);
-//     expect(createHtmlSpy).toHaveBeenCalledWith(todos);
+// describe('toggleTodo', () => {
+//     let todo: Todo;
+//     let changeTodoSpy: jest.SpyInstance;
+//     let createHtmlSpy: jest.SpyInstance;
+  
+//     beforeEach(() => {
+//       todo = new Todo('Buy milk', true);
+//       changeTodoSpy = jest.spyOn(changeTodo);
+//       createHtmlSpy = jest.spyOn(createHtml);
+//     });
+  
+//     test('should toggle the todo and update the HTML', () => {
+//       toggleTodo(todo);
+  
+//       expect(changeTodoSpy).toHaveBeenCalledWith(todo);
+//       expect(createHtmlSpy).toHaveBeenCalled();
 //   });
 // });
+
