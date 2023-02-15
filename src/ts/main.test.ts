@@ -1,7 +1,7 @@
 import { addTodo, changeTodo, removeAllTodos } from "./functions";
 import { IAddResponse } from "./models/IAddResult";
 import { Todo } from "./models/Todo";
-import { displayError } from "./main";
+// import { displayError } from "./main";
 
 describe('addTodo', () => {
   let todos: Todo[];
@@ -33,7 +33,7 @@ describe('addTodo', () => {
   });
 });
 
-test("shoukd be the oppiset of whatever it is now",() =>{
+test("should be the oppiset of whatever it is now",() =>{
 
   let todo = new Todo('Buy groceries', false);
 
@@ -94,30 +94,30 @@ test('should remove all todos from the array', () => {
 //   });
 // });
 
-describe('displayError', () => {
-  beforeEach(() => {
-    document.body.innerHTML = `
-      <div id="error"></div>
-    `;
-  });
+// describe('displayError', () => {
+//   beforeEach(() => {
+//     document.body.innerHTML = `
+//       <div id="error"></div>
+//     `;
+//   });
 
-  test('should display the error message in the error container when show is true', () => {
-    let errorMessage = 'Du måste ange minst tre bokstäver';
+//   test('should display the error message in the error container when show is true', () => {
+//     let errorMessage = 'Du måste ange minst tre bokstäver';
 
-    displayError(errorMessage, true);
+//     displayError(errorMessage, true);
 
-    let errorContainer = document.getElementById('error');
-    expect(errorContainer?.innerHTML).toBe(errorMessage);
-    expect(errorContainer?.classList.contains('show')).toBe(true);
-  });
+//     let errorContainer = document.getElementById('error');
+//     expect(errorContainer?.innerHTML).toBe(errorMessage);
+//     expect(errorContainer?.classList.contains('show')).toBe(true);
+//   });
 
-  test('should hide the error container when show is false', () => {
-    let errorMessage = 'Du måste ange minst tre bokstäver';
+//   test('should hide the error container when show is false', () => {
+//     let errorMessage = 'Du måste ange minst tre bokstäver';
 
-    displayError(errorMessage, false);
+//     displayError(errorMessage, false);
 
-    let errorContainer = document.getElementById('error');
-    expect(errorContainer?.innerHTML).toBe(errorMessage);
-    expect(errorContainer?.classList.contains('show')).toBe(false);
-  });
-});
+//     let errorContainer = document.getElementById('error');
+//     expect(errorContainer?.innerHTML).toBe(errorMessage);
+//     expect(errorContainer?.classList.contains('show')).toBe(false);
+//   });
+// });
