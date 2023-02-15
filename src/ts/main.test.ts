@@ -1,7 +1,9 @@
 import { addTodo, changeTodo, removeAllTodos } from "./functions";
 import { IAddResponse } from "./models/IAddResult";
 import { Todo } from "./models/Todo";
-// import { displayError } from "./main";
+import { displayError, createHtml, clearTodos, toggleTodo, createNewTodo } from "./main";
+// import "./main";
+
 
 describe('addTodo', () => {
   let todos: Todo[];
@@ -47,16 +49,80 @@ test("should be the oppiset of whatever it is now",() =>{
 })
 
 test('should remove all todos from the array', () => {
-  let todos = [
+  let Todos = [
     new Todo('test1', false),
     new Todo('test2', true),
     new Todo('test3', false),
   ];
   
-  removeAllTodos(todos);
+  removeAllTodos(Todos);
   
-  expect(todos.length).toBe(0);
+  expect(Todos.length).toBe(0);
 })
+
+// describe('createNewTodo', () => {
+//   test("should create a new todo", () => {
+//     const todos: Todo[] = [];
+  
+//     // Mock localStorage
+//     const localStorageMock = {
+//       getItem: jest.fn().mockReturnValue("[]"),
+//       setItem: jest.fn(),
+//     };
+//     Object.defineProperty(window, "localStorage", { value: localStorageMock });
+  
+//     createNewTodo("Buy milk", todos);
+  
+//     expect(todos.length).toBe(1);
+//     expect(todos[0].text).toBe("Buy milk");
+//     expect(todos[0].done).toBe(false);
+//   });
+  
+//   test('should add a new todo when given valid input', () => {
+//     const todoText = 'Buy milk';
+//     const initialTodos: Todo[] = [];
+//     const expectedTodos: Todo[] = [new Todo(todoText, false)];
+//     const result = createNewTodo(todoText, initialTodos);
+//     expect(result).toEqual(expectedTodos);
+//   });
+
+//   test('should not add a new todo when given an empty input', () => {
+//     const todoText = '';
+//     const initialTodos: Todo[] = [];
+//     const expectedTodos: Todo[] = [];
+//     const result = createNewTodo(todoText, initialTodos);
+//     expect(result).toEqual(expectedTodos);
+//   });
+
+//   test('should not add a new todo when given a whitespace input', () => {
+//     const todoText = '   ';
+//     const initialTodos: Todo[] = [];
+//     const expectedTodos: Todo[] = [];
+//     const result = createNewTodo(todoText, initialTodos);
+//     expect(result).toEqual(expectedTodos);
+//   });
+// });
+
+
+// describe('toggleTodo', () => {
+//   let todo: Todo;
+//   let changeTodoSpy: jest.SpyInstance;
+//   let createHtmlSpy: jest.SpyInstance;
+
+//   beforeEach(() => {
+//     todo = new Todo('Buy milk', true);
+//     changeTodoSpy = jest.spyOn(changeTodo);
+//     createHtmlSpy = jest.spyOn(createHtml);
+//   });
+
+//   test('should toggle the todo and update the HTML', () => {
+//     toggleTodo(todo);
+
+//     expect(changeTodoSpy).toHaveBeenCalledWith(todo);
+//     expect(createHtmlSpy).toHaveBeenCalled();
+//   });
+// });
+
 
 // describe('createHtml', () => {
 //   let todos: Todo[];
@@ -94,30 +160,52 @@ test('should remove all todos from the array', () => {
 //   });
 // });
 
-// describe('displayError', () => {
+              // describe('displayError', () => {
+              //   beforeEach(() => {
+              //     document.body.innerHTML = `
+              //       <div id="error"></div>
+              //     `;
+              //   });
+
+              //   test('should display the error message in the error container when show is true', () => {
+              //     let errorMessage = 'Du måste ange minst tre bokstäver';
+
+              //     displayError(errorMessage, true);
+
+              //     let errorContainer = document.getElementById('error');
+              //     expect(errorContainer?.innerHTML).toBe(errorMessage);
+              //     expect(errorContainer?.classList.contains('show')).toBe(true);
+              //   });
+
+              //   test('should hide the error container when show is false', () => {
+              //     let errorMessage = 'Du måste ange minst tre bokstäver';
+
+              //     displayError(errorMessage, false);
+
+              //     let errorContainer = document.getElementById('error');
+              //     expect(errorContainer?.innerHTML).toBe(errorMessage);
+              //     expect(errorContainer?.classList.contains('show')).toBe(false);
+              //   });
+              // });
+
+
+// describe('clearTodos', () => {
+//   let todos: Todo[];
+
 //   beforeEach(() => {
-//     document.body.innerHTML = `
-//       <div id="error"></div>
-//     `;
+//     todos = [
+//       new Todo('Buy milk', true),
+//       new Todo('Walk the dog', false),
+//     ];
 //   });
 
-//   test('should display the error message in the error container when show is true', () => {
-//     let errorMessage = 'Du måste ange minst tre bokstäver';
+//   test('should remove all todos and update the HTML', () => {
+//     const removeAllTodosSpy = jest.spyOn(todos, 'removeAllTodos');
+//     const createHtmlSpy = jest.spyOn(todos, 'createHtml');
 
-//     displayError(errorMessage, true);
+//     clearTodos(todos);
 
-//     let errorContainer = document.getElementById('error');
-//     expect(errorContainer?.innerHTML).toBe(errorMessage);
-//     expect(errorContainer?.classList.contains('show')).toBe(true);
-//   });
-
-//   test('should hide the error container when show is false', () => {
-//     let errorMessage = 'Du måste ange minst tre bokstäver';
-
-//     displayError(errorMessage, false);
-
-//     let errorContainer = document.getElementById('error');
-//     expect(errorContainer?.innerHTML).toBe(errorMessage);
-//     expect(errorContainer?.classList.contains('show')).toBe(false);
+//     expect(removeAllTodosSpy).toHaveBeenCalledWith(todos);
+//     expect(createHtmlSpy).toHaveBeenCalledWith(todos);
 //   });
 // });
