@@ -1,13 +1,6 @@
 import { addTodo, changeTodo, removeAllTodos } from "./functions";
 import { Todo } from "./models/Todo";
 
-const localStorageMock = {
-  getItem: jest.fn(),
-  setItem: jest.fn(),
-  removeItem: jest.fn(),
-  clear: jest.fn(),
-};
-
 let todos: Todo[] = JSON.parse(localStorage.getItem("todos") || "[]");
 
 document.getElementById("clearTodos")?.addEventListener("click", () => {
@@ -28,7 +21,7 @@ document.getElementById("clearTodos")?.addEventListener("click", () => {
   }
 );
 
-export function createNewTodo(todoText: string, todos: Todo[]) {
+function createNewTodo(todoText: string, todos: Todo[]) {
   let result = addTodo(todoText, todos);
 
   if (result.success) {
@@ -38,7 +31,7 @@ export function createNewTodo(todoText: string, todos: Todo[]) {
   }
 }
 
-export function createHtml(todos: Todo[]) {
+function createHtml(todos: Todo[]) {
   localStorage.setItem("todos", JSON.stringify(todos));
 
   let todosContainer: HTMLUListElement = document.getElementById(
@@ -64,12 +57,12 @@ export function createHtml(todos: Todo[]) {
   }
 }
 
-export function toggleTodo(todo: Todo) {
+function toggleTodo(todo: Todo) {
   changeTodo(todo);
   createHtml(todos);
 }
 
-export function displayError(error: string, show: boolean) {
+function displayError(error: string, show: boolean) {
   let errorContainer: HTMLDivElement = document.getElementById(
     "error"
   ) as HTMLDivElement;
@@ -83,7 +76,7 @@ export function displayError(error: string, show: boolean) {
   }
 }
 
-export function clearTodos(todos: Todo[]) {
+function clearTodos(todos: Todo[]) {
   removeAllTodos(todos);
   createHtml(todos);
 }
